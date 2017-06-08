@@ -10,6 +10,14 @@
                 </router-link>
                 <p class="title">{{item.title}}</p>
               </div>
+              <el-rate
+                v-model="item.rating.average"
+                disabled
+                show-text
+                text-color="#ff9900"
+                :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']"
+                text-template="{value}">
+                </el-rate>
              <div class="tags">
                 <span v-for="tag in item.genres">{{tag}}</span>
               </div>         
@@ -66,6 +74,19 @@ export default {
 .el-rate__icon {
     font-size: 14px;
 }
+.el-tabs__header {
+    position: fixed;
+    z-index: 1001;
+    width: 100%;
+    top:60px;
+    background: #fff;
+}
+.el-tabs__content {
+    margin-top: 105px;
+}
+.current-movie{
+  margin-top:60px;
+}
 .movie-box{
   font:0;
   padding:5px;
@@ -92,6 +113,9 @@ export default {
   margin:5px 0;
   font-size:16px;
   text-align:center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .movie-box .tags{
   width:100%;

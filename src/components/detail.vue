@@ -1,30 +1,59 @@
 <template>
-  <div class="detail">
-    <div class="title"><h1>神奇女侠</h1></div>
+  <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')'}">
+    
     <div class="top-wrap">
-        <div class="cover">
-            <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460006593.webp" alt="">
-        </div>
+    <div class="content-wrap">
+        <div class="title"><h1>{{detail.title}} - {{detail.year}}</h1></div>
         <div class="content">
-            <p class="author">导演: 派蒂·杰金斯</p>
-            <p class="casts">主演: 盖尔·加朵 / 克里斯·派恩 / 康妮·尼尔森 / 罗宾·怀特 / 丹尼·赫斯顿 /</p>
-            <p class="types">类型: 动作 / 奇幻 / 冒险</p>
-            <div class="rate"></div>
+            <p v-if="detail.aka">又名: <span v-for="tag in detail.aka">{{tag}} / </span> </p>
+            <p class="author">导演: <span v-for="tag in detail.directors">{{tag.name}} / </span></p>
+            <p class="casts">主演: <span v-for="tag in detail.casts">{{tag.name}} / </span></p>
+            <p class="types">类型: <span v-for="tag in detail.genres">{{tag}} / </span></p>
+            
+        </div>
+        <div class="rate block">
+            <h2>----评分----</h2>
+            <p><el-rate
+                v-model="detail.rating.average"
+                :max=10
+                disabled
+                show-text
+                text-color="#ff9900"
+                :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']"
+                text-template="{value}">
+                </el-rate>
+             <span>({{detail.collect_count}}人评价)</span></p>
+        </div>
+        <div class="summary block">
+            <h2>----剧情简介----</h2>
+            <p>{{detail.summary}}</p>
         </div>
     </div>
-    <div class="summary">
-        <h2>电影介绍</h2>
-        <p>电影介绍介绍介绍</p>
-    </div>
+</div>    
   </div>
 </template>
 
 <script>
+import jsonp from 'jsonp';
 export default {
   name: 'detail',
   data () {
     return {
-      title: '豆瓣电影'
+      title: '豆瓣电影',
+      id:1,
+      detail:{
+            images:'',
+            rating:{avarage:0},
+            collect_count:'',
+            summary:'',
+            genres:[],
+            cast:[],
+            aka:[],
+            directors:[],
+            title:'',
+            year:''
+      },
+      rate:6.7
     };
   },
  created () {
@@ -38,8 +67,18 @@ export default {
   },
   methods: {
     fetchData () {
+    window.scrollTo(0,0)
       // replace getPost with your data fetching util / API wrapper
-     this.title = this.$route.params.id;
+     this.id = this.$route.params.id;
+     var that = this;
+      jsonp('https://api.douban.com/v2/movie/subject/'+this.id, null, function (err, data) {
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log(data);
+                that.detail = data;
+            }
+        });
     }
   }
 };
@@ -48,23 +87,62 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .detail{
-    padding:10px 20px;
+    background:url(https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460006593.webp) center no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
+    height:100vh;
+    margin-top:60px;
+}
+.top-wrap{
+    padding-top:400px;
+}
+.content-wrap{
+     background:#f2f7f2;
+}
+.title{
+    padding:20px;
+    padding-bottom:0;
 }
 .title h1{
-    font-size:20px;
+    font-size:16px;
     color:#333;
-    margin-bottom:20px;
+    font-weight:normal;
 }
-.top-wrap .cover{
-    padding:0 10px;
+.cover{
+    padding:0;
 }
-.top-wrap .cover img{
+.cover img{
     width:100%;
     height:100%;
     max-width:100%;
 }
 .content {
     margin-top:5px;
-    padding:10px;
+    padding:5px 20px;
+    
+}
+.content p{
+    font:14px/1.4em a;
+    color:#aaa;
+    margin:6px 0;
+}
+.block {
+    padding:20px;
+}
+.rate span{
+    padding-left:10px;
+    color:#aaa;
+    font-size:12px;
+}
+.block h2{
+    margin-bottom:10px;
+    color:#888;
+    font-size:16px;
+    font-weight:normal;
+    text-align:center;
+}
+.block p{
+    font:14px/1.4em a;
+    color:#333;
 }
 </style>

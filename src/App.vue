@@ -119,7 +119,10 @@ a {
     vertical-align:baseline;
     background:transparent;
 }
-
+a:link,a:visited,a:active,a:hover{
+    color:#fff;
+    text-decoration:none;
+}
 ins {
     background-color:#ff9;
     color:#000;

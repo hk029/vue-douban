@@ -2,7 +2,7 @@
   <div class="header-douban">
     <header>
         <img src="" class="icon">
-        <h1> {{ title }} </h1>
+        <h1><router-link :to="{ name: 'currentMovie'}">{{ title }} </router-link></h1>
         <span class="more-func"></span>
     </header>
   </div>
@@ -27,7 +27,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .header-douban{
-  position: 
+  position:fixed;
+  width:100%;
+  z-index:10000;
+  top:0;
 }
 header{
   background-color: rgb(0, 181, 29);

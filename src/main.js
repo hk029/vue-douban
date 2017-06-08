@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-douban/index.css'
+import './theme-douban/index.css'
 Vue.prototype.$http = axios
 Vue.use(ElementUI);
 
