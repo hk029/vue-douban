@@ -1,13 +1,4 @@
 .git/*
-build/*
 node_modules/*
-..gitignore.un~
-.gitignore.swp
-.gitignore~
-build/*
-*.future
-*.DS_Store
-*DS_Store
-*.log
-publish/publish-front-gr.js
-publish/node_modules/*
+
+

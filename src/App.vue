@@ -1,16 +1,24 @@
 <template>
-  <div id="app">
-    <header-douban></header-douban>
-    <router-view :movie="indata"></router-view>
+  <div id="app" :class="{lock:showSide}"> 
+    <header class="header-douban">
+        <img src="" class="icon">
+        <h1><router-link :to="{ name: 'currentMovie'}">{{ title }} </router-link></h1>
+        <span class="more-func" @click="showSide=true"></span>
+    </header>
+    <transition name="el-fade-in">
+        <router-view :movie="indata"></router-view>
+    </transition>
+     <sidenav-com :show="showSide" @hide="showSide=false"></sidenav-com>
+
   </div>
 </template>
 
 <script>
-import HeaderDouban from './components/HeaderDouban'
+import sidenavCom from './components/sidenavCom.vue'
 import jsonp from 'jsonp';
 export default {
   name: 'app',
-  components: { HeaderDouban },
+  components: { sidenavCom},
   data (){
     return {
         indata:{
@@ -20,12 +28,22 @@ export default {
             commingsoon:{
                 subjects:[]
             }
-        }
+        },
+        title:"豆瓣电影",
+        showSide:false
+    }
+  },
+  methods:{
+  },
+  watch:{
+    '$route' (to, from) {
+        // console.log(to);
+        // console.log(from);
     }
   },
   created(){
         var that = this;
-        jsonp('https://api.douban.com/v2/movie/in_theaters', null, function (err, data) {
+        jsonp('https://api.douban.com/v2/movie/in_theaters?count=40', null, function (err, data) {
             if (err) {
                 console.error(err.message);
             } else {
@@ -33,7 +51,7 @@ export default {
                 that.indata.current = data;
             }
         });
-        jsonp('https://api.douban.com/v2/movie/coming_soon', null, function (err, data) {
+        jsonp('https://api.douban.com/v2/movie/coming_soon?count=40', null, function (err, data) {
             if (err) {
                 console.error(err.message);
             } else {
@@ -47,128 +65,36 @@ export default {
 
 <style>
 #app {
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;*/
   height: 100%;
   margin:0;
 }
-/* 
-html5doctor.com Reset Stylesheet
-v1.4.1 
-2010-03-01
-Author: Richard Clark - http://richclarkdesign.com
-*/
-
-html, body, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-abbr, address, cite, code,
-del, dfn, em, img, ins, kbd, q, samp,
-small, strong, sub, sup, var,
-b, i,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section, summary,
-time, mark, audio, video {
-    margin:0;
-    padding:0;
-    border:0;
-    outline:0;
-    font-size:100%;
-    vertical-align:baseline;
-    background:transparent;
+.lock{
+   position:fixed;
+}
+.header-douban{
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+    top: 0;
+    height: 60px;
+    line-height: 60px;
+}
+header{
+  background-color: rgb(0, 181, 29);
+}
+h1{
+  color:#fff;
+     font-size: 20px;
+    padding-left: 20px;
+}
+.more-func{
+    background: url(./img/func.png) center no-repeat;
+    height: 24px;
+    width: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-size: cover;
 }
 
-body {
-    line-height:1;
-}
-
-:focus {
-	outline: 1;
-}
-
-article,aside,canvas,details,figcaption,figure,
-footer,header,hgroup,menu,nav,section,summary { 
-    display:block;
-}
-
-nav ul {
-    list-style:none;
-}
-
-blockquote, q {
-    quotes:none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content:'';
-    content:none;
-}
-
-a {
-    margin:0;
-    padding:0;
-    border:0;
-    font-size:100%;
-    vertical-align:baseline;
-    background:transparent;
-}
-a:link,a:visited,a:active,a:hover{
-    color:#fff;
-    text-decoration:none;
-}
-ins {
-    background-color:#ff9;
-    color:#000;
-    text-decoration:none;
-}
-
-mark {
-    background-color:#ff9;
-    color:#000; 
-    font-style:italic;
-    font-weight:bold;
-}
-
-del {
-    text-decoration: line-through;
-}
-
-abbr[title], dfn[title] {
-    border-bottom:1px dotted #000;
-    cursor:help;
-}
-
-table {
-    border-collapse:collapse;
-    border-spacing:0;
-}
-  
-hr {
-    display:block;
-    height:1px;
-    border:0;       
-    border-top:1px solid #cccccc;
-    margin:1em 0;
-    padding:0;
-}
-
-input, select {
-    vertical-align:middle;
-}
-ul{
-    list-style:none;
-    padding:0;
-    margin:0;
-}
-ul li{
-    padding:0;
-    margin:0;
-}
 </style>

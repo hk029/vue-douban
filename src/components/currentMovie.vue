@@ -10,21 +10,15 @@
                 </router-link>
                 <p class="title">{{item.title}}</p>
               </div>
-              <el-rate
-                v-model="item.rating.average"
-                disabled
-                show-text
-                text-color="#ff9900"
-                :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']"
-                text-template="{value}">
-                </el-rate>
+              <el-rate v-model="item.rating.average" disabled show-text text-color="#ff9900" :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']" text-template="{value}"> </el-rate>
              <div class="tags">
                 <span v-for="tag in item.genres">{{tag}}</span>
               </div>         
             </li>
           </ul>
         </el-tab-pane>
-        <el-tab-pane label="即将上映" name="future">
+        <el-tab-pane label="即将上映" name="future" >
+       
           <ul class="movie-box">
             <li class="cell" v-for="item in movie.commingsoon.subjects">  
                 <div class="cover">
@@ -38,7 +32,9 @@
               </div>         
             </li>
           </ul>
+          
         </el-tab-pane>
+        </transition>
     </el-tabs>
   </div>
 </template>

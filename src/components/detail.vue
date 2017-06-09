@@ -61,17 +61,12 @@ export default {
     // 此时 data 已经被 observed 了
     this.fetchData()
   },
-  watch: {
-    // 如果路由有变化，会再次执行该方法
-    '$route': 'fetchData'
-  },
   methods: {
     fetchData () {
-    window.scrollTo(0,0)
-      // replace getPost with your data fetching util / API wrapper
-     this.id = this.$route.params.id;
-     var that = this;
-      jsonp('https://api.douban.com/v2/movie/subject/'+this.id, null, function (err, data) {
+        window.scrollTo(0,0)
+        this.id = this.$route.params.id;
+        var that = this;
+        jsonp('https://api.douban.com/v2/movie/subject/'+this.id, null, function (err, data) {
             if (err) {
                 console.error(err.message);
             } else {
