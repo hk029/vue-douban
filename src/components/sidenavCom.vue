@@ -1,46 +1,48 @@
 <template>
-
   <div class="sidenav-com">
-     
-     <div class="mask" v-show="show"></div>
-    
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animated slideInRight"
-        leave-active-class="animated fadeOutRight"
-     >
-     <div class="sidenav" v-show="show">
+    <div class="mask" v-show="show"></div>
+    <transition name="custom-classes-transition" enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+      <div class="sidenav" v-show="show">
+        <span class="close" v-on:click="hideThis"><img src="../img/x.png" alt=""></span>
         <div class="top-wrap">
-            <div class="icon"><img src="../img/logo.jpg" alt=""></div>
-            <p class="author">作者：voidsky</p>
-            <p class="version">version:1.0</p>
+          <div class="icon">
+            <img src="../img/logo.png" alt="">
+          </div>
+          <p class="appname">豆瓣WebApp</p>
+          <p class="version">version:1.0</p>
+          <p class="author">作者：voidsky</p>
         </div>
         <div class="nav-block" v-on:click="hideThis">
           <h2 class="title cur">豆瓣电影</h2>
           <h3 class="cat">榜单</h3>
-          <p class="item">Top250</p>
-          <router-link :to="{name: 'detail'}" class="item" >美剧榜</router-link>
-          <p class="item">新片榜</p>
+          <router-link :to="{ name: 'top250', params: { id: 'top250' }}" class="item">top250</router-link>
+          <router-link :to="{ name: 'usbox', params: { id: 'us_box' }}" class="item">北美票房榜</router-link>
+          <router-link :to="{ name: 'newmovies', params: { id: 'new_movies' }}" class="item">新片榜</router-link>
         </div>
-     </div>
-       </transition> 
+        <div class="nav-block" v-on:click="hideThis">
+          <h2 class="title">豆瓣读书</h2>
+        </div>
+        <div class="nav-block" v-on:click="hideThis">
+          <h2 class="title">豆瓣音乐</h2>
+        </div>
+      </div>
+    </transition>
   </div>
-
 </template>
 
 <script>
 export default {
   name: 'sidenavCom',
-  data () {
+  data() {
     return {
-      myshow:this.show
+      myshow: this.show
     };
   },
-  watch:{
+  watch: {
 
   },
   methods: {
-    hideThis () {
+    hideThis() {
       this.$emit('hide');
     },
     handleOpen(key, keyPath) {
@@ -50,86 +52,113 @@ export default {
       console.log(key, keyPath);
     }
   },
-  props:['title','show']
+  props: ['title', 'show']
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.top-wrap{
-  height:200px;
-  text-align:center;
-}
-.top-wrap .icon{
-  width:100%;
-}
-.top-wrap .icon img{
-  width:80%;
+.top-wrap {
+  text-align: center;
+  font:14px/1.4em a;
+  margin-bottom:20px;
+  padding-top:20px;
 }
 
-.nav-block .title{
-    height: 56px;
-    line-height: 56px;
-    font-size: 16px;
-    font-weight:normal;
-    color: rgb(72, 106, 82);
-    padding: 0 20px;
-    cursor: pointer;
-    position: relative;
-    transition: border-color .3s,background-color .3s,color .3s;
-    box-sizing: border-box;
-    white-space: nowrap;
-    background:rgb(209, 229, 215);
+.top-wrap .icon {
+  width: 100%;
 }
 
-.title.cur{
-  color:#00b51d;
+.top-wrap .icon img {
+  width: 80%;
 }
-.nav-block .cat{
-    padding-top: 15px;
-    line-height: normal;
-    font-weight:normal;
-    font-size: 14px;
-    padding-left: 20px;
-    color: rgb(151, 190, 164);
-}
-.nav-block .item{
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    color: rgb(72, 106, 82);
-    padding: 0 40px;
-    transition: border-color .3s,background-color .3s,color .3s;
-    box-sizing: border-box;
-}
-.nav-block ul{
-  background:rgb(228, 241, 234);
-}
-.nav-block ul li{
-  padding-left:20px;
-  font:16px/2em a;
-  margin:10px 0;
-  border-bottom:1px solid #aaa;
 
+.nav-block .title {
+  height: 56px;
+  line-height: 56px;
+  font-size: 16px;
+  font-weight: normal;
+  color: rgb(72, 106, 82);
+  padding: 0 20px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color .3s, background-color .3s, color .3s;
+  box-sizing: border-box;
+  white-space: nowrap;
+  background: rgb(209, 229, 215);
+  top:0;
+  width: 100%;
 }
-.mask{
-    background:rgba(0,0,0,0.2);
-    position:fixed;
-    z-index:10001;
-    width:100%;
-    height:100%;
-    top:0px;
+
+.title.cur {
+  color: #00b51d;
 }
-.sidenav{
-    width:50%;
-    height:100%;
-    position:fixed;
-    top:0px;
-    right:0;
-    z-index:10002;
-    background:rgb(228, 241, 234);
+
+.nav-block .cat {
+  padding-top: 15px;
+  line-height: normal;
+  font-weight: normal;
+  font-size: 14px;
+  padding-left: 20px;
+  color: rgb(151, 190, 164);
 }
-.light{
-    background:rgb(228, 241, 234);
+
+.nav-block .item {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: rgb(72, 106, 82);
+  padding: 0 40px;
+  transition: border-color .3s, background-color .3s, color .3s;
+  box-sizing: border-box;
+  display: block;
+}
+
+.nav-block ul {
+  background: rgb(228, 241, 234);
+}
+
+.nav-block ul li {
+  padding-left: 20px;
+  font: 16px/2em a;
+  margin: 10px 0;
+  border-bottom: 1px solid #aaa;
+}
+
+.mask {
+  background: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 10001;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+}
+
+.sidenav {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  right:0;
+  z-index: 10002;
+  background: rgb(228, 241, 234);
+}
+
+.light {
+  background: rgb(228, 241, 234);
+}
+.close{
+  width:30px;
+  height:30px;
+  font-size:30px;
+  position:absolute;
+  top:0;
+  left:-30px;
+  color:#333;
+  font-weight:bold;
+}
+.close img{
+  width:20px;
+  height:20px;
 }
 </style>

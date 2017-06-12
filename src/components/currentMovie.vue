@@ -9,9 +9,9 @@
                   <img v-bind:src="item.images.large" alt="">
                 </router-link>
                 <p class="title">{{item.title}}</p>
-              </div>
-              <el-rate v-model="item.rating.average" disabled show-text text-color="#ff9900" :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']" text-template="{value}"> </el-rate>
-             <div class="tags">
+                </div>
+                <db-rate :rate="item.rating.average"></db-rate>
+                <div class="tags">
                 <span v-for="tag in item.genres">{{tag}}</span>
               </div>         
             </li>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-
+import dbRate from "./dbRate"
 export default {
     name: 'current-movie',
     data() {
@@ -50,36 +50,17 @@ export default {
       };
     },
     methods: {
+      getNum(item){
+        return item/2;
+      }
     },
-    props:['movie']
+    props:['movie'],
+    components:{dbRate}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-.el-tabs__nav{
-  width:100%;
-}
-.el-tabs__item{
-  width:50%;
-  text-align:center;
-}
-.el-rate {
-    padding: 0 10px;
-}
-.el-rate__icon {
-    font-size: 14px;
-}
-.el-tabs__header {
-    position: fixed;
-    z-index: 1001;
-    width: 100%;
-    top:60px;
-    background: #fff;
-}
-.el-tabs__content {
-    margin-top: 105px;
-}
+<style scoped>
 .current-movie{
   margin-top:60px;
 }
@@ -106,8 +87,8 @@ export default {
     margin: 0 auto;
 } 
 .movie-box .title{
-  margin:5px 0;
-  font-size:16px;
+  margin:10px 0;
+  font-size:14px;
   text-align:center;
   text-overflow: ellipsis;
   overflow: hidden;

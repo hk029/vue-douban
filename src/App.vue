@@ -3,13 +3,13 @@
     <header class="header-douban">
         <img src="" class="icon">
         <h1><router-link :to="{ name: 'currentMovie'}">{{ title }} </router-link></h1>
+        <h2>{{subtitle}}</h2>
         <span class="more-func" @click="showSide=true"></span>
     </header>
     <transition name="el-fade-in">
         <router-view :movie="indata"></router-view>
     </transition>
      <sidenav-com :show="showSide" @hide="showSide=false"></sidenav-com>
-
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
                 subjects:[]
             }
         },
-        title:"豆瓣电影",
+        title:"豆瓣",
+        subtitle:'上映电影',
         showSide:false
     }
   },
@@ -37,7 +38,19 @@ export default {
   },
   watch:{
     '$route' (to, from) {
-        // console.log(to);
+        console.log(to);
+        var name = to.name;
+        switch(name){
+            case 'top250':
+                this.subtitle = 'TOP250';
+            break;
+             case 'usbox':
+                this.subtitle = '北美票房榜';
+            break;
+             case 'newmovies':
+                this.subtitle = '新片榜';
+            break;
+        }
         // console.log(from);
     }
   },
@@ -71,6 +84,30 @@ export default {
 .lock{
    position:fixed;
 }
+.el-tabs__nav{
+  width:100%;
+}
+.el-tabs__item{
+  width:50%;
+  text-align:center;
+}
+.el-rate {
+    padding: 0 10px;
+    text-align: center;
+}
+.el-rate__icon {
+    font-size: 14px;
+}
+.el-tabs__header {
+    position: fixed;
+    z-index: 1001;
+    width: 100%;
+    top:60px;
+    background: #fff;
+}
+.el-tabs__content {
+    margin-top: 105px;
+}
 .header-douban{
     position: fixed;
     width: 100%;
@@ -86,6 +123,16 @@ h1{
   color:#fff;
      font-size: 20px;
     padding-left: 20px;
+}
+h2{
+    position: relative;
+    top:-60px;
+    text-align: center;
+    color:#eee;
+    font-weight: normal;
+    font-size: 18px;
+        width: 100px;
+    margin: 0 auto;
 }
 .more-func{
     background: url(./img/func.png) center no-repeat;

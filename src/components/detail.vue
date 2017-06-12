@@ -19,7 +19,7 @@
                 disabled
                 show-text
                 text-color="#ff9900"
-                :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']"
+                disabled-void-color="#C6D1DE"
                 text-template="{value}">
                 </el-rate>
              <span>({{detail.collect_count}}人评价)</span></p>
@@ -81,6 +81,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.el-rate{
+    text-align: left;
+}
 .detail{
     background:url(https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460006593.webp) center no-repeat;
     background-size:cover;
