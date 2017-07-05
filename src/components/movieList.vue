@@ -1,7 +1,7 @@
 <template>
     <div class="movie-list">
         <ul class="movie-box">
-            <li class="cell" v-for="item in moviedata.subjects">
+            <li class="cell" v-for="item in moviedata.subjects" :key=item>
                 <div class="cover">
                     <router-link :to="{ name: 'detail', params: { id: item.id }}">
                         <img v-bind:src="item.images.large" alt="">
@@ -10,7 +10,7 @@
                 </div>
                 <db-rate :rate="item.rating.average"></db-rate>
                 <div class="tags">
-                    <span v-for="tag in item.genres">{{tag}}</span>
+                    <span v-for="tag in item.genres" :key=tag>{{tag}}</span>
                 </div>
             </li>
         </ul>
@@ -24,24 +24,27 @@ export default {
     name: 'movieList',
     data() {
         return {
-            moviedata:{
-                subjects:[]
+            moviedata: {
+                subjects: []
             }
         };
     },
     methods: {
     },
-    created(){
-        var that = this;
+    created() {
+        var self = this;
         console.log();
-        jsonp('https://api.douban.com/v2/movie/'+this.$route.params.id+'?count=40', null, function (err, data) {
-            if (err) {
-                console.error(err.message);
-            } else {
-                console.log(data);
-                that.moviedata = data;
-            }
-        });
+        this.http.get('/api/' + this.$route.params.id) 
+            .then(res => {
+                if (res.status === 200) {
+                    console.log(res);
+                    self.moviedata.subjects = res.data.subjects;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+            ;
     },
     props: ['movie'],
     components: { dbRate }
@@ -50,7 +53,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.movie-list{
+.movie-list {
     margin-top: 60px;
 }
 

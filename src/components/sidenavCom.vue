@@ -3,7 +3,9 @@
     <div class="mask" v-show="show"></div>
     <transition name="custom-classes-transition" enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
       <div class="sidenav" v-show="show">
-        <span class="close" v-on:click="hideThis"><img src="../img/x.png" alt=""></span>
+        <span class="close" v-on:click="hideThis">
+          <img src="../img/x.png" alt="">
+        </span>
         <div class="top-wrap">
           <div class="icon">
             <img src="../img/logo.png" alt="">
@@ -12,18 +14,12 @@
           <p class="version">version:1.0</p>
           <p class="author">作者：voidsky</p>
         </div>
-        <div class="nav-block" v-on:click="hideThis">
-          <h2 class="title cur">豆瓣电影</h2>
-          <h3 class="cat">榜单</h3>
-          <router-link :to="{ name: 'top250', params: { id: 'top250' }}" class="item">top250</router-link>
-          <router-link :to="{ name: 'usbox', params: { id: 'us_box' }}" class="item">北美票房榜</router-link>
-          <router-link :to="{ name: 'newmovies', params: { id: 'new_movies' }}" class="item">新片榜</router-link>
-        </div>
-        <div class="nav-block" v-on:click="hideThis">
-          <h2 class="title">豆瓣读书</h2>
-        </div>
-        <div class="nav-block" v-on:click="hideThis">
-          <h2 class="title">豆瓣音乐</h2>
+        <div class="nav-block" v-on:click="hideThis" v-for="item in nav">
+          <h2 :class="['title', {cur:item.current}]">{{item.title}}</h2>
+          <div class="cat-wrap" v-for="cat in item.cats">
+            <h3 class="cat">{{cat.title}}</h3>
+            <router-link :to="{ name: router.routeName, params: { id: router.id }}" class="item" v-for="router of cat.subs">{{router.name}}</router-link>
+          </div>
         </div>
       </div>
     </transition>
@@ -35,7 +31,45 @@ export default {
   name: 'sidenavCom',
   data() {
     return {
-      myshow: this.show
+      myshow: this.show,
+      nav: [{
+        'title': '豆瓣电影',
+        'current': true,
+        'cats': [
+          {
+            'title': '当前上映',
+            'subs': [{
+              'routeName': 'currentMovie',
+              'name': '当前热映',
+              'id': 'currentMovie',
+              'key': 'currentMovie'
+            }]
+          }, {
+            'title': '榜单',
+            'subs': [{
+              'routeName': 'top250',
+              'name': 'top250',
+              'id': 'top250',
+              'key': 'top250'
+            },
+            {
+              'routeName': 'usbox',
+              'name': '北美票房榜',
+              'id': 'us_box',
+              'key': 'us_box'
+            },
+            {
+              'routeName': 'newmovies',
+              'name': '新片榜',
+              'id': 'new_movies',
+              'key': 'new_movies'
+            }]
+          }]
+      }, {
+        'title': '豆瓣读书',
+        'current': false,
+        'cats': []
+      }]
     };
   },
   watch: {
@@ -60,9 +94,9 @@ export default {
 <style scoped>
 .top-wrap {
   text-align: center;
-  font:14px/1.4em a;
-  margin-bottom:20px;
-  padding-top:20px;
+  font: 14px/1.4em a;
+  margin-bottom: 20px;
+  padding-top: 20px;
 }
 
 .top-wrap .icon {
@@ -86,7 +120,7 @@ export default {
   box-sizing: border-box;
   white-space: nowrap;
   background: rgb(209, 229, 215);
-  top:0;
+  top: 0;
   width: 100%;
 }
 
@@ -138,8 +172,8 @@ export default {
   width: 50%;
   height: 100%;
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   z-index: 10002;
   background: rgb(228, 241, 234);
 }
@@ -147,18 +181,20 @@ export default {
 .light {
   background: rgb(228, 241, 234);
 }
-.close{
-  width:30px;
-  height:30px;
-  font-size:30px;
-  position:absolute;
-  top:0;
-  left:-30px;
-  color:#333;
-  font-weight:bold;
+
+.close {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  position: absolute;
+  top: 0;
+  left: -30px;
+  color: #333;
+  font-weight: bold;
 }
-.close img{
-  width:20px;
-  height:20px;
+
+.close img {
+  width: 20px;
+  height: 20px;
 }
 </style>

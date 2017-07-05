@@ -9,7 +9,7 @@
         </header>
         <transition name="el-fade-in">
             <div class="content">
-                <router-view :movie="indata"></router-view>
+                <router-view></router-view>
             </div>
         </transition>
         <sidenav-com :show="showSide" @hide="showSide=false"></sidenav-com>
@@ -24,14 +24,6 @@ export default {
     components: { sidenavCom },
     data() {
         return {
-            indata: {
-                current: {
-                    subjects: []
-                },
-                commingsoon: {
-                    subjects: []
-                }
-            },
             title: "豆瓣",
             subtitle: '上映电影',
             showSide: false
@@ -58,20 +50,7 @@ export default {
         }
     },
     created() {
-        var self = this;
-        this.http.get('/api/current?page=0').then(res=>{
-            console.log(res);
-            if(res.status === 200){
-                self.indata.current = res.data;
-                self.indata.commingsoon = res.data.commingsoon;
-            }
-        });
-        this.http.get('/api/commingsoon?page=0').then(res=>{
-            console.log(res);
-            if(res.status === 200){
-                self.indata.commingsoon = res.data;
-            }
-        });
+
     }
 }
 </script>
