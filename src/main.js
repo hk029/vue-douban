@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import './theme-douban/index.css'
 import './css/animate.css'
 import './css/reset.css'
-Vue.prototype.$http = axios
+Vue.prototype.http = axios
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

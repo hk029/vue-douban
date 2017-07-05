@@ -125,7 +125,8 @@ export default {
     margin:6px 0;
 }
 .block {
-    padding:20px;
+    padding: 20px;
+    padding-top: 0px;
 }
 .rate span{
     padding-left:10px;
