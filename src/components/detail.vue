@@ -1,5 +1,5 @@
 <template>
-    <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')'}">
+    <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')',backgroundSize: 'cover',backgroundAttachment: 'fixed'}">
     
         <div class="top-wrap">
             <div class="content-wrap">

@@ -14,11 +14,11 @@
           <p class="version">version:1.0</p>
           <p class="author">作者：voidsky</p>
         </div>
-        <div class="nav-block" v-on:click="hideThis" v-for="item in nav">
+        <div class="nav-block" v-on:click="hideThis" v-for="item in nav" :key=item>
           <h2 :class="['title', {cur:item.current}]">{{item.title}}</h2>
-          <div class="cat-wrap" v-for="cat in item.cats">
+          <div class="cat-wrap" v-for="cat in item.cats" :key=cat>
             <h3 class="cat">{{cat.title}}</h3>
-            <router-link :to="{ name: router.routeName, params: { id: router.id }}" class="item" v-for="router of cat.subs">{{router.name}}</router-link>
+            <router-link :to="{ name: router.routeName, params: { id: router.id }}" class="item" v-for="router of cat.subs" :key=router>{{router.name}}</router-link>
           </div>
         </div>
       </div>

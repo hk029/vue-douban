@@ -45,6 +45,9 @@ export default {
                 case 'newmovies':
                     this.subtitle = '新片榜';
                     break;
+                case 'currentMovie':
+                    this.subtitle = '上映电影';
+                    break;
             }
             // console.log(from);
         }
