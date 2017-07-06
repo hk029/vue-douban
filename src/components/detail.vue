@@ -95,6 +95,7 @@ export default {
     background: url(https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460006593.webp) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    height:100%;
     height: 100vh;
     margin-top: 60px;
 }
