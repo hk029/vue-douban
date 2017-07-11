@@ -53,9 +53,6 @@ app.get('/api/usbox', function (req, res) {
     res.sendfile('./data/usbox.json');
 });
 
-
-
-
 // 获取数据，并分页存储
 function getDataPerPage(url, namePrefix, pageCount, curPage, total) {
     var curPage = curPage || 0;

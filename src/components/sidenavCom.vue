@@ -14,9 +14,9 @@
           <p class="version">version:1.2</p>
           <p class="author">作者：voidsky(黄锴)</p>
         </div>
-        <div class="search-bar">
+        <!--<div class="search-bar">
           <input type="text" placeholder="输入关键词">
-        </div>
+        </div>-->
         <div class="nav-block" v-on:click="hideThis" v-for="item in nav" :key='item'>
           <h2 :class="['title', {cur:item.current}]">{{item.title}}</h2>
           <div class="cat-wrap" v-for="cat in item.cats" :key='cat'>
