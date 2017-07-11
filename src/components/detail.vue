@@ -1,6 +1,5 @@
 <template>
     <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')',backgroundSize: 'cover',backgroundAttachment: 'fixed'}">
-    
         <div class="top-wrap">
             <div class="content-wrap">
                 <div class="title">
@@ -8,20 +7,20 @@
                 </div>
                 <div class="content">
                     <p v-if="detail.aka">又名:
-                        <span v-for="tag in detail.aka" :key=tag>{{tag}} / </span>
+                        <span v-for="tag in detail.aka" :key='tag'>{{tag}} / </span>
                     </p>
                     <p class="author">导演:
-                        <span v-for="tag in detail.directors" :key=tag>{{tag.name}} / </span>
+                        <span v-for="tag in detail.directors" :key='tag'>{{tag.name}} / </span>
                     </p>
                     <p class="casts">主演:
-                        <span v-for="tag in detail.casts" :key=tag>{{tag.name}} / </span>
+                        <span v-for="tag in detail.casts" :key='tag'>{{tag.name}} / </span>
                     </p>
                     <p class="types">类型:
-                        <span v-for="tag in detail.genres" :key=tag>{{tag}} / </span>
+                        <span v-for="tag in detail.genres" :key='tag'>{{tag}} / </span>
                     </p>
                 </div>
                 <div class="rate block">
-                    <h2>----评分----</h2>
+                    <h2>----豆瓣评分----</h2>
                     <p>
                         <el-rate v-model="detail.rating.average" :max=10 disabled show-text text-color="#ff9900" disabled-void-color="#C6D1DE" text-template="{value}">
                         </el-rate>
@@ -95,12 +94,15 @@ export default {
     background: url(https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460006593.webp) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    height:100%;
     height: 100vh;
-    margin-top: 60px;
+    height:100%;
+    height:600px;
+    overflow: auto;
+
 }
 
 .top-wrap {
+
     padding-top: 400px;
 }
 

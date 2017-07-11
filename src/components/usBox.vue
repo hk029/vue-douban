@@ -10,9 +10,15 @@
                         </router-link>
                     </div>
                     <div class="info">
-                        <p class="title">{{item.subject.title}}</p>
-                        <p class="box">实时票房：<span class="num">{{formateBox(item.box)}}</span></p>
-                        <p class="rate">豆瓣评分：<db-rate :rate="item.subject.rating.average"></db-rate></p>
+                        <router-link :to="{ name: 'detail', params: { id: item.subject.id }}">
+                            <p class="title">{{item.subject.title}}</p>
+                        </router-link>
+                        <p class="box">实时票房：
+                            <span class="num">{{formateBox(item.box)}}</span>
+                        </p>
+                        <p class="rate">豆瓣评分：
+                            <db-rate :rate="item.subject.rating.average"></db-rate>
+                        </p>
                         <div class="tags">
                             <span v-for="tag in item.subject.genres" :key='tag'>{{tag}}</span>
                         </div>
@@ -39,18 +45,18 @@ export default {
         };
     },
     methods: {
-        formateBox(box){
-            if(box > 100000000){
-                return (box/100000000).toFixed(2) + '亿';
+        formateBox(box) {
+            if (box > 100000000) {
+                return (box / 100000000).toFixed(2) + '亿';
             }
-            else if(box > 10000){
-                return (box/10000).toFixed(0) + '万';
+            else if (box > 10000) {
+                return (box / 10000).toFixed(0) + '万';
             }
 
         }
     },
-    computed:{
-       
+    computed: {
+
     },
     created() {
         var self = this;
@@ -82,10 +88,12 @@ export default {
     font: 0;
     padding: 5px;
 }
-.movie-box .box-cell{
+
+.movie-box .box-cell {
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 }
+
 .box-cell .rank {
     display: inline-block;
     vertical-align: top;
@@ -100,38 +108,39 @@ export default {
     vertical-align: top;
 }
 
-.movie-detail .cover{
+.movie-detail .cover {
     display: inline-block;
     padding: 0 5px;
     vertical-align: top;
 }
 
-.movie-detail .info{
+.movie-detail .info {
     display: inline-block;
     vertical-align: top;
     text-align: left;
     padding-left: 10px;
 }
 
-.movie-detail .info{
+.movie-detail .info {
     display: inline-block;
     vertical-align: top;
     text-align: left;
 }
-.movie-detail .info p{
+
+.movie-detail .info p {
     font-size: 14px;
     margin-bottom: 20px;
 }
 
 
-.movie-detail .info .box .num{
-    color:#fe6d0e;
+.movie-detail .info .box .num {
+    color: #fe6d0e;
     font-weight: bold;
 }
 
 
-.movie-detail .db-rate{
-    padding-left:0;
+.movie-detail .db-rate {
+    padding-left: 0;
 }
 
 .movie-detail .cover img {
@@ -143,20 +152,19 @@ export default {
 }
 
 .movie-detail .info .title {
-    margin:10px 0 20px;
+    margin: 10px 0 20px;
     font-size: 16px;
     line-height: 16px;
-    font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
     font-weight: bold;
-    color:green;
-    width:140px;
+    color: green;
+    width: 140px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    
 }
 
-.movie-detail  .tags {
+.movie-detail .tags {
     width: 100%;
     overflow: hidden;
     margin: 10px 0;
