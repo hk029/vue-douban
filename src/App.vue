@@ -24,7 +24,7 @@ export default {
     components: { sidenavCom },
     data() {
         return {
-            title: "豆瓣",
+            title: "豆瓣客",
             subtitle: '上映电影',
             showSide: false
         }
@@ -39,7 +39,7 @@ export default {
                 case 'top250':
                     this.subtitle = 'TOP250';
                     break;
-                case 'usbox':
+                case 'usBox':
                     this.subtitle = '北美票房榜';
                     break;
                 case 'newmovies':
@@ -133,5 +133,27 @@ export default {
     right: 20px;
     top: 20px;
     background-size: cover;
+}
+
+
+.loading {
+  text-align: center;
+  color: #aaa;
+}
+
+.loading img {
+  width: 50px;
+  margin-left: -20px;
+  margin-bottom: 0;
+}
+
+.loading p {
+  line-height: 14px;
+  font-size: 14px;
+  margin-top: 0;
+}
+
+.title{
+    color:green;
 }
 </style>

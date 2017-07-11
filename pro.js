@@ -48,8 +48,16 @@ app.get('/api/commingsoon', function (req, res) {
     res.sendfile('./data/commingsoon_' + page + '.json');
 });
 
+// 获取即将上映电影
+app.get('/api/usbox', function (req, res) {
+    res.sendfile('./data/usbox.json');
+});
+
+
+
+
 // 获取数据，并分页存储
-function getDataPerPage(url, namePrefix, pageCount, curPage = 0, total = 100) {
+function getDataPerPage(url, namePrefix, pageCount, curPage, total) {
     var curPage = curPage || 0;
     var total = total || 100;
     $http
@@ -58,9 +66,9 @@ function getDataPerPage(url, namePrefix, pageCount, curPage = 0, total = 100) {
             if (res.status === 200) {
                 var data = res.data;
                 var tmp = [];
-                var pageEnd = Math.ceil(data.total / pageCount);
                 total = Math.min(total, data.total);
                 total = Math.min(total, data.count);
+                var pageEnd = Math.ceil(data.total / pageCount);
                 for (var i = 1; i <= total; i++) {
                     tmp.push(data.subjects[i - 1]);
                     if ((i % pageCount === 0 && i !== 0) || i === total) {
@@ -80,15 +88,37 @@ function getDataPerPage(url, namePrefix, pageCount, curPage = 0, total = 100) {
         });
 }
 
+function getUsBox() {
+    $http
+        .get('http://api.douban.com/v2/movie/us_box')
+        .then(res => {
+            if (res.status === 200) {
+                var data = res.data;
+                var tmp = [];
+                fs.writeFileSync('./data/usbox.json', JSON.stringify(data));
+            }
+        });
+}
+
 
 // 每小时定期爬取豆瓣数据
 var rule = new schedule.RecurrenceRule();
 rule.minute = 1;
-var j = schedule.scheduleJob(rule, function () {
-    console.log('执行任务');
+var job1 = schedule.scheduleJob(rule, function () {
+    console.log('执行任务爬取上映电影');
     getDataPerPage('https://api.douban.com/v2/movie/in_theaters?count=100', 'current', 20);
     getDataPerPage('https://api.douban.com/v2/movie/coming_soon?count=100', 'commingsoon', 20);
 });
+
+
+// 每小时定期爬取豆瓣数据
+var rule2 = new schedule.RecurrenceRule();
+rule.hour = 10;
+var job2 = schedule.scheduleJob(rule, function () {
+    console.log('执行任务爬取北美票房');
+    getUsBox();
+});
+
 
 // getDataPerPage('http://localhost:8000/data/top250.json', 'top250', 20, 0, 250);
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="movie-list">
+    <div class="movie-list" :style="{'height':height + 'px'}">
         <ul class="movie-box">
-            <li class="cell" v-for="item in moviedata.subjects" :key=item>
+            <li class="cell" v-for="item in moviedata.subjects" :key='item'>
                 <div class="cover">
                     <router-link :to="{ name: 'detail', params: { id: item.id }}">
                         <img v-bind:src="item.images.large" alt="">
@@ -10,10 +10,14 @@
                 </div>
                 <db-rate :rate="item.rating.average"></db-rate>
                 <div class="tags">
-                    <span v-for="tag in item.genres" :key=tag>{{tag}}</span>
+                    <span v-for="tag in item.genres" :key='tag'>{{tag}}</span>
                 </div>
             </li>
         </ul>
+        <div class="loading">
+            <img src="../img/loading.gif" alt="">
+            <p>Loading...</p>
+        </div>
     </div>
 </template>
 
@@ -24,27 +28,59 @@ export default {
     name: 'movieList',
     data() {
         return {
+            dataLock: false,
+            height: 0,
+            hasNext: true,
+            cur: 0,
             moviedata: {
                 subjects: []
             }
         };
     },
     methods: {
+        getData() {
+            var _this = this;
+            var page = this.cur;
+            if (this.hasNext) {
+                this.http.get('/api/top250?page=' + page)
+                    .then(res => {
+                        if (res.status === 200) {
+                            setTimeout((function (data) {
+                                return function () {
+                                    _this.moviedata.subjects = _this.moviedata.subjects.concat(data.subjects);
+                                    _this.cur = page + 1;
+                                    _this.hasNext = data.hasNext;
+                                    _this.dataLock = false;
+                                }
+                            })(res.data), 500);
+                            console.log(res);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+                    ;
+            } else {
+                this.dataLock = false;
+                document.querySelector('.movie-list .loading').style.display = 'none';
+            }
+        }
     },
     created() {
-        var self = this;
-        console.log();
-        this.http.get('/api/' + this.$route.params.id) 
-            .then(res => {
-                if (res.status === 200) {
-                    console.log(res);
-                    self.moviedata.subjects = res.data.subjects;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            })
-            ;
+        var _this = this;
+        this.height = window.innerHeight - 60;
+        this.getData();
+
+    },
+    mounted() {
+        var _this = this;
+        document.querySelector('.movie-list').onscroll = function () {
+            if (!_this.dataLock && this.scrollTop + this.offsetHeight >= this.scrollHeight) {
+                console.log('.movie-list');
+                _this.dataLock = true;
+                _this.getData();
+            }
+        };
     },
     props: ['movie'],
     components: { dbRate }
@@ -55,6 +91,8 @@ export default {
 <style scoped>
 .movie-list {
     margin-top: 60px;
+    overflow: auto;
+    height: 300px;
 }
 
 .movie-box {

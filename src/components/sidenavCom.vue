@@ -1,5 +1,5 @@
 <template>
-  <div class="sidenav-com">
+  <div class="sidenav-com" :style="{'width':width+'px'}">
     <div class="mask" v-show="show"></div>
     <transition name="custom-classes-transition" enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
       <div class="sidenav" v-show="show">
@@ -10,15 +10,18 @@
           <div class="icon">
             <img src="../img/logo.png" alt="">
           </div>
-          <p class="appname">豆瓣WebApp</p>
-          <p class="version">version:1.0</p>
-          <p class="author">作者：voidsky</p>
+          <p class="appname">豆瓣客 WebApp</p>
+          <p class="version">version:1.2</p>
+          <p class="author">作者：voidsky(黄锴)</p>
         </div>
-        <div class="nav-block" v-on:click="hideThis" v-for="item in nav" :key=item>
+        <div class="search-bar">
+          <input type="text" placeholder="输入关键词">
+        </div>
+        <div class="nav-block" v-on:click="hideThis" v-for="item in nav" :key='item'>
           <h2 :class="['title', {cur:item.current}]">{{item.title}}</h2>
-          <div class="cat-wrap" v-for="cat in item.cats" :key=cat>
+          <div class="cat-wrap" v-for="cat in item.cats" :key='cat'>
             <h3 class="cat">{{cat.title}}</h3>
-            <router-link :to="{ name: router.routeName, params: { id: router.id }}" class="item" v-for="router of cat.subs" :key=router>{{router.name}}</router-link>
+            <router-link :to="{ name: router.routeName, params: { id: router.id }}" class="item" v-for="router of cat.subs" :key='router'>{{router.name}}</router-link>
           </div>
         </div>
       </div>
@@ -31,6 +34,7 @@ export default {
   name: 'sidenavCom',
   data() {
     return {
+      width:0,
       myshow: this.show,
       nav: [{
         'title': '豆瓣电影',
@@ -53,16 +57,10 @@ export default {
               'key': 'top250'
             },
             {
-              'routeName': 'usbox',
+              'routeName': 'usBox',
               'name': '北美票房榜',
-              'id': 'us_box',
-              'key': 'us_box'
-            },
-            {
-              'routeName': 'newmovies',
-              'name': '新片榜',
-              'id': 'new_movies',
-              'key': 'new_movies'
+              'id': 'usBox',
+              'key': 'usBox'
             }]
           }]
       }, {
@@ -74,6 +72,9 @@ export default {
   },
   watch: {
 
+  },
+  created(){
+    this.width = window.innerWidth;
   },
   methods: {
     hideThis() {
@@ -106,7 +107,9 @@ export default {
 .top-wrap .icon img {
   width: 80%;
 }
-
+.top-wrap p{
+  line-height: 1.4em;
+}
 .nav-block .title {
   height: 56px;
   line-height: 56px;

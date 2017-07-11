@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import currentMovie from '@/components/currentMovie'
 import detail from '@/components/detail'
 import movieList from '@/components/movieList'
+import usBox from '@/components/usBox'
 Vue.use(Router)
 
 export default new Router({
@@ -24,14 +25,13 @@ export default new Router({
     },
     {
       path: '/usbox',
-      name: 'usbox',
-      component: movieList
+      name: 'usBox',
+      component: usBox
     },
     {
       path: '/newmovies',
       name: 'newmovies',
       component: movieList
-    },
-
+    }
   ]
 })
