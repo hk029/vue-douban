@@ -50,6 +50,8 @@ app.get('/api/commingsoon', function (req, res) {
 
 // 获取数据，并分页存储
 function getDataPerPage(url, namePrefix, pageCount, curPage = 0, total = 100) {
+    var curPage = curPage || 0;
+    var total = total || 100;
     $http
         .get(url)
         .then(res => {
