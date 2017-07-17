@@ -2,6 +2,21 @@
 
 > A Vue.js project
 
+## 手机演示地址
+
+![](http://o7bk1ffzo.bkt.clouddn.com/1500279870905)
+
+## 电脑端地址（注意浏览器调成手机模式）
+[点我进入](easytop.top:8000)
+
+## 页面展示
+
+![your text](http://o7bk1ffzo.bkt.clouddn.com/1500279905199)
+
+![your text](http://o7bk1ffzo.bkt.clouddn.com/1500279913969)
+
+![your text](http://o7bk1ffzo.bkt.clouddn.com/1500279915915)
+
 ## Build Setup
 
 ``` bash
