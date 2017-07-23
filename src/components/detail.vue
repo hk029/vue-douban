@@ -1,5 +1,5 @@
 <template>
-    <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')',backgroundSize: 'cover',backgroundAttachment: 'fixed'}">
+    <div class="detail" v-bind:style="{backgroundImage:'url('+detail.images.large+')',backgroundSize: 'cover',backgroundAttachment: 'fixed',height:height+'px'}">
         <div class="top-wrap">
             <div class="content-wrap">
                 <div class="title">
@@ -44,6 +44,7 @@ export default {
         return {
             title: '豆瓣电影',
             id: 1,
+            height:600,
             detail: {
                 images: '',
                 rating: { avarage: 0 },
@@ -62,6 +63,7 @@ export default {
     created() {
         // 组件创建完后获取数据，
         // 此时 data 已经被 observed 了
+        this.height = window.innerHeight;
         this.fetchData()
     },
     methods: {

@@ -6,6 +6,11 @@ var $http = require('axios');
 
 app.use(express.static('dist'));
 
+app.get('/abc', function (req, res) {
+    console.log(req.query);
+    res.send(JSON.stringify(req.query));
+});
+
 app.get('/api/top250', function (req, res) {
     var page = req.query.page || 0;
     console.log(page);
