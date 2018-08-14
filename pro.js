@@ -122,50 +122,6 @@ var job2 = schedule.scheduleJob(rule, function () {
 });
 
 
-// getDataPerPage('http://localhost:8000/data/top250.json', 'top250', 20, 0, 250);
-
-// for(var i = 0;i < 15; i++) {
-//   var data = fs.readFileSync('');
-
-// }
-
-// function test (i,j) {
-//     $http.get('https://api.douban.com/v2/movie/top250?count=250&start=' + i).then(
-//         res => {
-//             if (res.status === 200) {
-//                 fs.writeFileSync('./dist/top250_' + j + '.json', JSON.stringify(res.data));
-//                 console.log('successful');
-//             }
-//         }
-//     )
-// }
-
-
-// // test(100,1);
-// // test(200,2);
-// var movies = {};
-// for (var i = 0; i <= 5; i++) {
-//   var tmp = JSON.parse(fs.readFileSync('./dist/top250_' + i + '.json'));
-//   tmp.subjects.forEach(function (e) {
-//     movies[e.title] = e;
-//     // console.log(e.title);
-//   }, this);
-// }
-
-// var i = 0;
-// var list = [];
-// for(key in movies) {
-//   list.push(movies[key]);
-// }
-// list.sort(function(a,b){
-//   return a.rating.average < b.rating.average;
-// })
-
-// list.forEach(e => {
-//   console.log(e.title,e.rating.average);
-// })
-
-// fs.writeFileSync('./dist/data/top250.json', JSON.stringify({total:250, hasNext : false , subjects: list}));
 
 var server = app.listen(8000, function () {
     console.log('listening at http://localhost:8000');
